@@ -54,7 +54,7 @@
 - (void)initEventShortCuts {
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSKeyDownMask handler: ^(NSEvent *event) {
         NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
-        if (flags == NSAlternateKeyMask + NSShiftKeyMask) {
+        if (flags == NSControlKeyMask + NSShiftKeyMask) {
             
             if ([event keyCode] == 32) {
                 [self uploadScreenshotAction:self];
@@ -93,7 +93,7 @@
                                                      keyEquivalent:@"U"
                                   ];
     
-    [menuItemUpload setKeyEquivalentModifierMask: NSShiftKeyMask | NSAlternateKeyMask];
+    [menuItemUpload setKeyEquivalentModifierMask: NSShiftKeyMask | NSControlKeyMask];
     [menu addItem:menuItemUpload];
     
     //Clipboard
@@ -102,7 +102,7 @@
                                                         keyEquivalent:@"C"
                                      ];
     
-    [menuItemClipboard setKeyEquivalentModifierMask: NSShiftKeyMask | NSAlternateKeyMask];
+    [menuItemClipboard setKeyEquivalentModifierMask: NSShiftKeyMask | NSControlKeyMask];
     
     [menu addItem:menuItemClipboard];
     [menu addItem:[NSMenuItem separatorItem]];
@@ -113,7 +113,7 @@
                                                         keyEquivalent:@"N"
                                      ];
     
-    [menuItemNote setKeyEquivalentModifierMask: NSShiftKeyMask | NSAlternateKeyMask];
+    [menuItemNote setKeyEquivalentModifierMask: NSShiftKeyMask | NSControlKeyMask];
     
     [menu addItem:menuItemNote];
     [menu addItem:[NSMenuItem separatorItem]];
