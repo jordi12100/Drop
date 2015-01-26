@@ -27,10 +27,7 @@
                               withIntermediateDirectories:YES
                                                attributes:nil
                                                     error:&error];
-    if (error != nil) {
-        NSLog(@"error creating directory: %@", error);
-    }
-
+    
     return path;
 }
 
