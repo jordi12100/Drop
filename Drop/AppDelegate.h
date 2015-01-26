@@ -19,7 +19,8 @@
 
 @property (strong, nonatomic) NSWindowController *noteWindowController;
 
-+ (void) sendNotificationWithMessage: (NSString *)message;
-
+- (void) sendNotificationWithMessage: (NSString *)message;
+- (void)startAnimating;
+- (void)stopAnimating;
 @end
 

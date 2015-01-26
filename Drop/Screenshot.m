@@ -18,7 +18,9 @@ NSString *const CT_LocalFileName = @"tmp_capture.png";
 /**
  *  generates the screenshot
  */
-- (void)generateScreenshot {
+- (BOOL)generateScreenshot {
+    [[NSFileManager defaultManager] removeItemAtPath:[self getOutputFile] error:NULL];
+    
     NSPipe *pipe = [NSPipe pipe];
     NSFileHandle *file = pipe.fileHandleForReading;
 
@@ -37,6 +39,9 @@ NSString *const CT_LocalFileName = @"tmp_capture.png";
     // Just a way to do this without a block
     [file readDataToEndOfFile];
     [file closeFile];
+    
+    return [[NSFileManager defaultManager] fileExistsAtPath:[self getOutputFile]];
+    
 }
 
 /**

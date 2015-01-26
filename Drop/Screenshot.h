@@ -12,7 +12,7 @@
 
 @property (strong, nonatomic, getter=getSavePath) NSString* savePath;
 
-- (void)generateScreenshot;
+- (BOOL)generateScreenshot;
 - (NSString *)getOutputFile;
 
 @end

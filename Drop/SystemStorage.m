@@ -34,6 +34,11 @@
     return path;
 }
 
+/**
+ *  Push a new message to the clipboard
+ *
+ *  @param message
+ */
 + (void)addMessageToClipboard: (NSString *)message {
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] setString:message forType:NSPasteboardTypeString];

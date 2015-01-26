@@ -17,6 +17,9 @@
 @synthesize noteMessage;
 @synthesize noteTitle;
 
+/**
+ *  On load window
+ */
 - (void)windowDidLoad {
     [super windowDidLoad];
     [[self window] setLevel:NSFloatingWindowLevel];
@@ -25,18 +28,35 @@
     [noteMessage setEnabledTextCheckingTypes:0];
 }
 
+/**
+ *  Upload note action
+ *
+ *  @param sender
+ */
 - (IBAction)uploadNoteAction:(id)sender {
+    AppDelegate* appDelegate = (AppDelegate*)[[NSApplication sharedApplication] delegate];
+    
+    [appDelegate startAnimating];
     [Request createGistWithTitle:[noteTitle stringValue] andDescription:[[noteMessage textStorage] string]
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *response = [responseObject objectForKey:@"html_url"];
-            [AppDelegate sendNotificationWithMessage:response];
+            [appDelegate sendNotificationWithMessage:response];
+            [appDelegate stopAnimating];
+            [self cancelAction:self];
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@", error);
+            [appDelegate sendNotificationWithMessage:[error description]];
+            [appDelegate stopAnimating];
+            [self cancelAction:self];
         }
      ];
 }
 
+/**
+ *  Cancel button
+ *
+ *  @param sender
+ */
 - (IBAction)cancelAction:(id)sender {
     [self close];
 }

@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NoteWindowController.m"
-            timestampString = "443988593.333693"
+            timestampString = "443990120.56942"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
             landmarkName = "-uploadNoteAction:"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,12 +58,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NoteWindowController.m"
-            timestampString = "443988949.792708"
+            timestampString = "443990180.665341"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "-uploadNoteAction:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Drop/Screenshot.m"
+            timestampString = "443991222.828116"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "-generateScreenshot"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

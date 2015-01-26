@@ -36,10 +36,21 @@
     [self initStatusBar];
 }
 
+/**
+ *  Present notification
+ *
+ *  @param center
+ *  @param notification
+ *
+ *  @return bool
+ */
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification{
     return YES;
 }
 
+/**
+ *  Handle shortkeys
+ */
 - (void)initEventShortCuts {
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSKeyDownMask handler: ^(NSEvent *event) {
         NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
@@ -96,8 +107,15 @@
     [menu addItem:menuItemClipboard];
     [menu addItem:[NSMenuItem separatorItem]];
     
-    [menu addItemWithTitle:@"Test" action:@selector(composeNoteAction:) keyEquivalent:@""];
+    // Compose note
+    NSMenuItem *menuItemNote = [[NSMenuItem alloc] initWithTitle:@"Compose note"
+                                                               action:@selector(composeNoteAction:)
+                                                        keyEquivalent:@"N"
+                                     ];
     
+    [menuItemNote setKeyEquivalentModifierMask: NSShiftKeyMask | NSAlternateKeyMask];
+    
+    [menu addItem:menuItemNote];
     [menu addItem:[NSMenuItem separatorItem]];
     [menu addItemWithTitle:@"Quit Drop" action:@selector(terminate:) keyEquivalent:@""];
     
@@ -123,21 +141,22 @@
     Screenshot *screenshot = [[Screenshot alloc] init];
     [screenshot setSavePath:[SystemStorage findResourcePath]];
     
-    [screenshot generateScreenshot];
+    if (![screenshot generateScreenshot]) {
+        return;
+    }
+    
     [self startAnimating];
     Request *request = [[Request alloc] init];
     
     [request uploadFileFromLocation:[screenshot getOutputFile]
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *response = [responseObject objectAtIndex:0];
-            NSLog(@"%@", response);
             [SystemStorage addMessageToClipboard: response];
             
             [self stopAnimating];
-            [AppDelegate sendNotificationWithMessage: response];
+            [self sendNotificationWithMessage: response];
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@", error);
             [self stopAnimating];
         }
      ];
@@ -152,7 +171,7 @@
     Screenshot *screenshot = [[Screenshot alloc] init];
     [screenshot generateScreenshot];
     
-    [AppDelegate sendNotificationWithMessage: @"Image copied to clipboard"];
+    [self sendNotificationWithMessage: @"Image copied to clipboard"];
 }
 
 /**
@@ -160,7 +179,7 @@
  *
  *  @param message description
  */
-+ (void) sendNotificationWithMessage: (NSString *)message {
+- (void) sendNotificationWithMessage: (NSString *)message {
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = @"Drop";
     notification.informativeText = (NSString *)message;
@@ -172,8 +191,8 @@
 /**
  *  On click notification
  *
- *  @param center       <#center description#>
- *  @param notification <#notification description#>
+ *  @param center
+ *  @param notification
  */
 - (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
 {
