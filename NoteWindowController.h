@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Request.h"
+#import "AppDelegate.h"
 
 @interface NoteWindowController : NSWindowController
 

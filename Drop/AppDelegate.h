@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "NoteWindowController.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, NSUserNotificationCenterDelegate>
 
 @property (strong, nonatomic) NSStatusItem *statusItem;
 @property (strong, nonatomic) NSTimer *animTimer;
@@ -17,7 +17,9 @@
 @property (weak) IBOutlet NSWindow *window;
 @property (readwrite, nonatomic) int currentFrame;
 
-@property (strong, nonatomic) NoteWindowController *noteWindowController;
+@property (strong, nonatomic) NSWindowController *noteWindowController;
+
++ (void) sendNotificationWithMessage: (NSString *)message;
 
 @end
 

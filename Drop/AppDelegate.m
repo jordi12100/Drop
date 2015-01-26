@@ -96,7 +96,7 @@
     [menu addItem:menuItemClipboard];
     [menu addItem:[NSMenuItem separatorItem]];
     
-    [menu addItemWithTitle:@"Test" action:@selector(testAction:) keyEquivalent:@""];
+    [menu addItemWithTitle:@"Test" action:@selector(composeNoteAction:) keyEquivalent:@""];
     
     [menu addItem:[NSMenuItem separatorItem]];
     [menu addItemWithTitle:@"Quit Drop" action:@selector(terminate:) keyEquivalent:@""];
@@ -109,7 +109,7 @@
  *
  *  @param sender
  */
-- (void) testAction:(id)sender {
+- (void) composeNoteAction:(id)sender {
     noteWindowController = [[NoteWindowController alloc] initWithWindowNibName:@"NoteWindowController"];
     [noteWindowController showWindow:nil];
 }
@@ -134,7 +134,7 @@
             [SystemStorage addMessageToClipboard: response];
             
             [self stopAnimating];
-            [self sendNotificationWithMessage: response];
+            [AppDelegate sendNotificationWithMessage: response];
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"%@", error);
@@ -152,7 +152,7 @@
     Screenshot *screenshot = [[Screenshot alloc] init];
     [screenshot generateScreenshot];
     
-    [self sendNotificationWithMessage: @"Image copied to clipboard"];
+    [AppDelegate sendNotificationWithMessage: @"Image copied to clipboard"];
 }
 
 /**
@@ -160,13 +160,30 @@
  *
  *  @param message description
  */
-- (void) sendNotificationWithMessage: (NSString *)message {
++ (void) sendNotificationWithMessage: (NSString *)message {
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = @"Drop";
     notification.informativeText = (NSString *)message;
     notification.soundName = NSUserNotificationDefaultSoundName;
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+}
+
+/**
+ *  On click notification
+ *
+ *  @param center       <#center description#>
+ *  @param notification <#notification description#>
+ */
+- (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
+{
+    NSString *notificationText = [notification informativeText];
+    NSString *urlRegEx = @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
+    
+    NSPredicate *urlTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx];
+    if ([urlTest evaluateWithObject:notificationText]) {
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:notificationText]];
+    }
 }
 
 /**

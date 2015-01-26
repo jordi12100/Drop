@@ -7,7 +7,6 @@
 //
 
 #import "Request.h"
-#import "OctoKit.h"
 
 @implementation Request
 
@@ -42,10 +41,50 @@ NSString *const CT_GithubGistUrl = @"https://api.github.com/gists?access_token=8
     }];
 }
 
-+ (void)createGistWithTitle: (NSString *)title andDescription: (NSString *)description {
+/**
+ *  Send request to github to create a new gist
+ *
+ *  @param title
+ *  @param description
+ *  @param success
+ *  @param failure
+ */
++ (void)createGistWithTitle: (NSString *)title andDescription: (NSString *)description
+                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
-    OCTClient *client = [OCTClient unauthenticatedClientWithUser:user];
+    NSURL *url = [NSURL URLWithString:CT_GithubGistUrl];
     
-    //NSLog(@"id :%@", [newGist gistId]);
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:10];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setValue: @"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    NSDictionary *jsonDictionary = @{
+        @"description" : title,
+        @"public" : @NO,
+        @"files" : @{
+            title : @{
+                @"content" : description
+            },
+        }
+    };
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary
+                                            options:NSJSONWritingPrettyPrinted
+                                            error:nil];
+    
+    [request setHTTPBody: jsonData];
+    
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    op.responseSerializer = [AFJSONResponseSerializer serializer];
+    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(nil, responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(nil, error);
+        
+    }];
+    [op start];
 }
 @end
