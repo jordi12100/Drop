@@ -63,6 +63,10 @@
             if ([event keyCode] == 8) {
                 [self saveScreenshotToClipboardAction:self];
             }
+            
+            if ([event keyCode] == 45) {
+                [self uploadScreenshotAction:self];
+            }
         }
     }];
 }
