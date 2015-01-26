@@ -1,4 +1,4 @@
-¨// AFURLResponseSerialization.m
+// AFURLResponseSerialization.m
 //
 // Copyright (c) 2013-2015 AFNetworking (http://afnetworking.com)
 //
