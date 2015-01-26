@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "AFHTTPRequestOperationManager.h"
+#import "ObjectiveGist.h"
 
 @interface Request : NSObject
 
 - (void)uploadFileFromLocation:(NSString *)location
                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
++ (void)createGistWithTitle: (NSString *)title andDescription: (NSString *)description;
 @end

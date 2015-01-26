@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NoteWindowController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate>
 
@@ -15,6 +16,8 @@
 
 @property (weak) IBOutlet NSWindow *window;
 @property (readwrite, nonatomic) int currentFrame;
+
+@property (strong, nonatomic) NoteWindowController *noteWindowController;
 
 @end
 

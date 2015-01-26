@@ -22,6 +22,7 @@
 @synthesize statusItem;
 @synthesize currentFrame;
 @synthesize animTimer;
+@synthesize noteWindowController;
 
 /**
  *  On app did finish launching
@@ -109,7 +110,8 @@
  *  @param sender
  */
 - (void) testAction:(id)sender {
-    //NSLog(@"%@", [SystemStorage stringSelection]);
+    noteWindowController = [[NoteWindowController alloc] initWithWindowNibName:@"NoteWindowController"];
+    [noteWindowController showWindow:nil];
 }
 
 /**
@@ -126,19 +128,18 @@
     Request *request = [[Request alloc] init];
     
     [request uploadFileFromLocation:[screenshot getOutputFile]
-                            success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                NSString *response = [responseObject objectAtIndex:0];
-                                NSLog(@"%@", response);
-                                [SystemStorage addMessageToClipboard: response];
-                                
-                                [self stopAnimating];
-                                
-                                [self sendNotificationWithMessage: response];
-                            }
-                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                NSLog(@"%@", error);
-                                [self stopAnimating];
-                            }
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString *response = [responseObject objectAtIndex:0];
+            NSLog(@"%@", response);
+            [SystemStorage addMessageToClipboard: response];
+            
+            [self stopAnimating];
+            [self sendNotificationWithMessage: response];
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"%@", error);
+            [self stopAnimating];
+        }
      ];
 }
 
