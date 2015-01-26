@@ -43,4 +43,19 @@
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] setString:message forType:NSPasteboardTypeString];
 }
+
+/**
+ *  Last string from clipboard
+ */
++ (NSString *)getLastClipboardString {
+    return [[NSPasteboard generalPasteboard]  stringForType:NSPasteboardTypeString];
+}
+
+/**
+ *  Wipe clipboard
+ */
++ (void)wipeClipboard {
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] setString:@"" forType:NSPasteboardTypeString];
+}
 @end

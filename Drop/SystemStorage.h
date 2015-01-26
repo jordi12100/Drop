@@ -12,5 +12,6 @@
 
 + (NSString *)findResourcePath;
 + (void)addMessageToClipboard: (NSString *)message;
-
++ (void)wipeClipboard;
++ (NSString *)getLastClipboardString;
 @end

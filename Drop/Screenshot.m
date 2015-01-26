@@ -7,6 +7,7 @@
 //
 
 #import "Screenshot.h"
+#import "SystemStorage.h"
 
 @implementation Screenshot
 
@@ -19,8 +20,9 @@ NSString *const CT_LocalFileName = @"tmp_capture.png";
  *  generates the screenshot
  */
 - (BOOL)generateScreenshot {
+    [SystemStorage wipeClipboard];
     [[NSFileManager defaultManager] removeItemAtPath:[self getOutputFile] error:NULL];
-    
+
     NSPipe *pipe = [NSPipe pipe];
     NSFileHandle *file = pipe.fileHandleForReading;
 
@@ -30,8 +32,10 @@ NSString *const CT_LocalFileName = @"tmp_capture.png";
     task.standardOutput = pipe;
     
     task.arguments = @[@"-ci"];
+    BOOL isUpload = NO;
     if ([self getSavePath] != nil) {
         task.arguments = @[@"-i", [self getOutputFile]];
+        isUpload = YES;
     }
 
     [task launch];
@@ -40,8 +44,13 @@ NSString *const CT_LocalFileName = @"tmp_capture.png";
     [file readDataToEndOfFile];
     [file closeFile];
     
-    return [[NSFileManager defaultManager] fileExistsAtPath:[self getOutputFile]];
+    if (!isUpload) {
+        return ![[SystemStorage getLastClipboardString] isEqualToString: @""];
+    } else {
+        return [[NSFileManager defaultManager] fileExistsAtPath:[self getOutputFile]];
+    }
     
+    return NO;
 }
 
 /**

@@ -56,14 +56,17 @@
         NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
         if (flags == NSControlKeyMask + NSShiftKeyMask) {
             
+            // Key: U
             if ([event keyCode] == 32) {
                 [self uploadScreenshotAction:self];
             }
             
+            // Key: C
             if ([event keyCode] == 8) {
                 [self saveScreenshotToClipboardAction:self];
             }
             
+            // Key: N
             if ([event keyCode] == 45) {
                 [self uploadScreenshotAction:self];
             }
@@ -173,9 +176,9 @@
  */
 - (void) saveScreenshotToClipboardAction:(id)sender {
     Screenshot *screenshot = [[Screenshot alloc] init];
-    [screenshot generateScreenshot];
-    
-    [self sendNotificationWithMessage: @"Image copied to clipboard"];
+    if ([screenshot generateScreenshot]) {
+        [self sendNotificationWithMessage: @"Image copied to clipboard"];
+    }
 }
 
 /**

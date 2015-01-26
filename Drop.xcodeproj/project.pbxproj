@@ -148,18 +148,16 @@
 			children = (
 				026BDDE51A768B0900904D9F /* NoteWindowController.h */,
 				026BDDE61A768B0900904D9F /* NoteWindowController.m */,
-				026BDDE71A768B0900904D9F /* NoteWindowController.xib */,
-				026BDDC41A75CEC500904D9F /* Vendor */,
 				026BDD9D1A75CE7300904D9F /* Screenshot.h */,
 				026BDD9E1A75CE7300904D9F /* Screenshot.m */,
 				026BDD7F1A75CE4D00904D9F /* AppDelegate.h */,
 				026BDD801A75CE4D00904D9F /* AppDelegate.m */,
-				026BDD841A75CE4D00904D9F /* Images.xcassets */,
 				026BDDA01A75CE7E00904D9F /* SystemStorage.h */,
 				026BDDA11A75CE7E00904D9F /* SystemStorage.m */,
 				026BDDA31A75CE8500904D9F /* Request.h */,
 				026BDDA41A75CE8500904D9F /* Request.m */,
-				026BDD861A75CE4D00904D9F /* MainMenu.xib */,
+				026BDD841A75CE4D00904D9F /* Images.xcassets */,
+				026BDDC41A75CEC500904D9F /* Vendor */,
 				026BDD7D1A75CE4D00904D9F /* Supporting Files */,
 			);
 			path = Drop;
@@ -171,6 +169,8 @@
 				026BDDA61A75CE9800904D9F /* images */,
 				026BDD7E1A75CE4D00904D9F /* Info.plist */,
 				026BDD821A75CE4D00904D9F /* main.m */,
+				026BDD861A75CE4D00904D9F /* MainMenu.xib */,
+				026BDDE71A768B0900904D9F /* NoteWindowController.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -571,6 +571,7 @@
 				026BDD991A75CE4E00904D9F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		026BDD9A1A75CE4E00904D9F /* Build configuration list for PBXNativeTarget "DropTests" */ = {
 			isa = XCConfigurationList;
@@ -579,6 +580,7 @@
 				026BDD9C1A75CE4E00904D9F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
