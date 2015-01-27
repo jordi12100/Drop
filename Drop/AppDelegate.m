@@ -73,7 +73,7 @@
             
             // Key: N
             if ([event keyCode] == 45) {
-                [self uploadScreenshotAction:self];
+                [self composeNoteAction:self];
             }
         }
     }];
