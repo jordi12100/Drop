@@ -45,7 +45,7 @@
  *  Last string from clipboard
  */
 + (NSString *)getLastClipboardString {
-    return [[NSPasteboard generalPasteboard]  stringForType:NSPasteboardTypeString];
+    return [[NSPasteboard generalPasteboard] stringForType:NSPasteboardTypeString];
 }
 
 /**

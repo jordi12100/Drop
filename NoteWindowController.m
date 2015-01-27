@@ -23,9 +23,17 @@
 - (void)windowDidLoad {
     [super windowDidLoad];
     [[self window] setLevel:NSFloatingWindowLevel];
+    [[self window] makeKeyAndOrderFront:self];
     
     [noteMessage setAutomaticQuoteSubstitutionEnabled:NO];
     [noteMessage setEnabledTextCheckingTypes:0];
+}
+
+/**
+ * On show window
+ */
+- (void)awakeFromNib {
+    [[self window] makeFirstResponder:noteMessage];
 }
 
 /**

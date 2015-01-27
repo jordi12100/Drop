@@ -52,6 +52,11 @@
  *  Handle shortkeys
  */
 - (void)initEventShortCuts {
+    NSDictionary *options = @{(__bridge id)kAXTrustedCheckOptionPrompt: @YES};
+    if (!AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options)) {
+        return;
+    }
+
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSKeyDownMask handler: ^(NSEvent *event) {
         NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
         if (flags == NSControlKeyMask + NSShiftKeyMask) {
