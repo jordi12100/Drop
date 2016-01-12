@@ -7,6 +7,7 @@
 //
 
 #import "NoteWindowController.h"
+#import "SystemStorage.h"
 
 @interface NoteWindowController ()
 
@@ -42,14 +43,19 @@
  *  @param sender
  */
 - (IBAction)uploadNoteAction:(id)sender {
-    AppDelegate* appDelegate = (AppDelegate*)[[NSApplication sharedApplication] delegate];
+    [SystemStorage wipeClipboard];
     
+    AppDelegate* appDelegate = (AppDelegate*)[[NSApplication sharedApplication] delegate];
     [appDelegate startAnimating];
+    
     [Request createGistWithTitle:[noteTitle stringValue] andDescription:[[noteMessage textStorage] string]
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *response = [responseObject objectForKey:@"html_url"];
             [appDelegate sendNotificationWithMessage:response];
             [appDelegate stopAnimating];
+            
+            [SystemStorage addMessageToClipboard: response];
+            
             [self cancelAction:self];
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {

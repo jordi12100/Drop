@@ -13,12 +13,12 @@
 /**
  *  remote upload path
  */
-NSString *const CT_RemoteUploadPath = @"http://drop.ghservers.org/index.php";
+NSString *const CT_RemoteUploadPath = @"http://domain.tld/upload";
 
 /**
- *  Github request URL
+ *  Gist access token
  */
-NSString *const CT_GithubGistUrl = @"https://api.github.com/gists?access_token=8b4088bc9d1b0b55f0772be88480ea1ed931e379";
+NSString *const CT_GistAccessToken = @"TOKEN_HERE";
 
 /**
  *  AF Request decorator to send files to the remote server
@@ -53,7 +53,9 @@ NSString *const CT_GithubGistUrl = @"https://api.github.com/gists?access_token=8
                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
-    NSURL *url = [NSURL URLWithString:CT_GithubGistUrl];
+    
+    NSString *GithubUrl = [NSString stringWithFormat:@"https://api.github.com/gists?access_token=%@", CT_GistAccessToken];
+    NSURL *url = [NSURL URLWithString:GithubUrl];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:10];
